@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="mine.css">
+	<meta charset="UTF-8">
+	<title>Lottery</title>
+	<script type="text/javascript">
+	var myLottery=[6];
+	var bingo=[7];//樂透號碼
+
+	function lotteryGenerator(){
+		var bingo=[7];//樂透號碼
+		var rdm=0;//製造隨機數字
+		for(var i=0; i<7; i++){
+			do{
+				var exist=false;//檢查是否重複用的
+				rdm=Math.floor((Math.random()*49+1));
+				if(bingo.indexOf(rdm)!=-1){exist=true;}
+			}
+			while(exist);
+			bingo[i]=rdm;
+		}
+	}
+	function lottery(){
+		var yes=0,special=0;//每種中獎的個數
+		for(var i=0;i<=5;i++){
+			for(var j=0;j<=5;j++){
+				if(myLottery[i]==bingo[j])yes++;
+			}
+			if(myLottery[i]==bingo[6])special++;
+		}
+		document.getElementById("moneyface").src="say.png";
+		if(yes==6){document.getElementById("words").innerHTML=("Congratulations!!You hit the jackpot!")}
+		else if(yes==5&&special==1){document.getElementById("words").innerHTML=("Congratulations!!You win the Second Prize!")}
+		else if(yes==5&&special==0){document.getElementById("words").innerHTML=("Congratulations!!You win the Third Prize!")}
+		else if(yes==4&&special==1){document.getElementById("words").innerHTML=("Congratulations!!You win the Forth Prize!")}
+		else if(yes==4&&special==0){document.getElementById("words").innerHTML=("Congratulations!!You win the fifth Prize!")}
+		else if(yes==3){document.getElementById("words").innerHTML=("Congratulations!!You win the Sixth Prize!")}
+		else if(yes>=2){document.getElementById("words").innerHTML=("Sorry, you lose the lottery.Cheer up!")}
+		else{document.getElementById("words").innerHTML=("Sorry, you lose the lottery.Cheer up!")}
+	}
+	function guessNumber(){
+		myLottery[0]=document.getElementById("n1").value;
+		myLottery[1]=document.getElementById("n2").value;
+		myLottery[2]=document.getElementById("n3").value;
+		myLottery[3]=document.getElementById("n4").value;
+		myLottery[4]=document.getElementById("n5").value;
+		myLottery[5]=document.getElementById("n6").value;
+		lottery();
+		document.getElementById("answer").innerHTML=
+		"<marquee behavior='slide' scrollamount='11'><div id='balls'><h2>"+
+		"<div class='ball'>"+bingo[0]+"</div>"+
+		"<div class='ball'>"+bingo[1]+"</div>"+
+		"<div class='ball'>"+bingo[2]+"</div>"+
+		"<div class='ball'>"+bingo[3]+"</div>"+
+		"<div class='ball'>"+bingo[4]+"</div>"+
+		"<div class='ball'>"+bingo[5]+"</div>"+
+		"<div id='specialball'>"+bingo[6]+"</div>"+
+		"</h2></div></marquee>";
+	}
+	function startNew(){
+		window.location.reload();
+	}
+	</script>
+</head>
+<body>
+	<div id="home"><a href="../hw1/index.html"><img src="home.jpeg" alt=""></div></a>
+	<div id="content">
+	<div id="title">
+		<h1>WELCOME TO THE LOTTERY&nbsp;!&nbsp;!&nbsp;</h1>
+		<div id="answer"><h2>choose numbers from 1-49</h2></div>
+	</div>
+	<div id="form">
+		<form action="#">
+			<input id="n1" type="text" maxlength="2">
+			<input id="n2" type="text" maxlength="2">
+			<input id="n3" type="text" maxlength="2">
+			<input id="n4" type="text" maxlength="2">
+			<input id="n5" type="text" maxlength="2">
+			<input id="n6" type="text" maxlength="2">
+			<br>
+			<input class="button" type="button" value="Guess!" onclick=guessNumber()>
+			<input class="button" type="button" value="Play again" onclick=startNew()>
+		</form>
+	</div>
+	<div id="result">
+		<div id="head"><img id="moneyface" src="head.png" alt="" ></div>
+		<div id="say">
+			<div id="triangle-left"></div>
+			<div id="words">hi</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
